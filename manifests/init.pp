@@ -19,6 +19,7 @@
 
 class stunnel ( $ensure_version = 'present', $startboot = '1', $default_extra )
 {
+
   case $::operatingsystem {
     debian: { class { 'stunnel::debian': } }
     centos: { class {  'stunnel::centos': } }
