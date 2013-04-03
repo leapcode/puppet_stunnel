@@ -40,10 +40,10 @@ define stunnel::service (
   $rndoverwrite = false,
   $service = false,
   $session = false,
-  $setuid = "stunnel4",
-  $setgid = "stunnel4",
-  $socket = [ "l:TCP_NODELAY=1", "r:TCP_NODELAY=1"],
-  $sslversion = "SSLv3",
+  $setuid = 'stunnel4',
+  $setgid = 'stunnel4',
+  $socket = [ 'l:TCP_NODELAY=1', 'r:TCP_NODELAY=1'],
+  $sslversion = 'SSLv3',
   $stack = false,
   $syslog = false,
   $timeoutbusy = false,
@@ -54,15 +54,16 @@ define stunnel::service (
   $verify = false
 ) {
 
-  $real_client = $client ? { default => "yes" }
+  $real_client = $client ? { default => 'yes' }
   $real_pid = $pid ? { false => "/${name}.pid", default => $pid }
-                    
+
   file { "/etc/stunnel/${name}.conf":
-    ensure => $ensure,
-    content => template('stunnel/service.conf.erb'), 
-    require => File["/etc/stunnel"],
-    notify => Service[stunnel],
-    owner => root, group => 0, mode => 0600;
+    ensure  => $ensure,
+    content => template('stunnel/service.conf.erb'),
+    require => File['/etc/stunnel'],
+    notify  => Service[stunnel],
+    owner   => root,
+    group   => 0,
+    mode    => '0600';
   }
 }
-

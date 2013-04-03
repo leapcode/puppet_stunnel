@@ -20,10 +20,11 @@
 class stunnel {
 
   case $stunnel_ensure_version {
-    '': { $stunnel_ensure_version = "present" }
+    '': { $stunnel_ensure_version = 'present' }
+    default: { $stunnel_ensure_version = 'present' }
   }
 
-  case $operatingsystem {
+  case $::operatingsystem {
     debian: { include stunnel::debian }
     centos: { include stunnel::centos }
     default: { include stunnel::default }
@@ -31,8 +32,12 @@ class stunnel {
 
   if $use_nagios {
     case $nagios_stunnel_procs {
-      'false': { info("We aren't doing nagios checks for stunnel on ${fqdn}" ) }
-      default: { nagios::service { "stunnel": check_command => "nagios-stat-proc!/usr/bin/stunnel4!6!5!proc"; } }
+      false: { info("We aren't doing nagios checks for stunnel on ${::fqdn}" ) }
+      default: { nagios::service
+        { 'stunnel':
+          check_command => 'nagios-stat-proc!/usr/bin/stunnel4!6!5!proc';
+        }
+      }
     }
   }
 }
