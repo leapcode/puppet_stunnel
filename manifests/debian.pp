@@ -10,10 +10,12 @@ class stunnel::debian inherits stunnel::linux {
   }
 
   file { '/etc/default/stunnel4':
-    content => template("stunnel/Debian/default"),
+    content => template('stunnel/Debian/default'),
     require => Package['stunnel4'],
-    notify => Service['stunnel4'],
-    owner => root, group => 0, mode => 0644;
+    notify  => Service['stunnel4'],
+    owner   => root,
+    group   => 0,
+    mode    => '0644';
   }
 }
 

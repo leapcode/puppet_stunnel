@@ -17,23 +17,12 @@
 
 # TODO: warn on cert/key issues, fail on false accept?
 
-class stunnel(
-  $cluster = '',
-  $ensure_version = 'present',
-  $startboot = '1',
-  $default_extra = '',
-  $nagios_stunnel_procs = false
-) {
+class stunnel ( $ensure_version = 'present', $startboot = '1', $default_extra, $cluster = '' )
+{
 
   case $::operatingsystem {
-    debian: { include stunnel::debian }
-    centos: { include stunnel::centos }
-    default: { include stunnel::default }
-  }
-
-  if $nagios_stunnel_procs {
-    nagios::service { "stunnel":
-      check_command => "nagios-stat-proc!/usr/bin/stunnel4!6!5!proc";
-    }
+    debian: { class { 'stunnel::debian': } }
+    centos: { class {  'stunnel::centos': } }
+    default: { class { 'stunnel::default': } }
   }
 }

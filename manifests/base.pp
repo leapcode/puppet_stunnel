@@ -1,13 +1,13 @@
 class stunnel::base {
 
-  file { "/etc/stunnel":
+  file { '/etc/stunnel':
     ensure => directory;
   }
 
   service { 'stunnel':
-    name => 'stunnel',
-    enable => true,
-    ensure => running,
+    ensure    => running,
+    name      => 'stunnel',
+    enable    => true,
     hasstatus => false;
   }
 }
