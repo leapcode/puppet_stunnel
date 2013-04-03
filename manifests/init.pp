@@ -17,17 +17,12 @@
 
 # TODO: warn on cert/key issues, fail on false accept?
 
-class stunnel {
-
-  case $stunnel_ensure_version {
-    '': { $stunnel_ensure_version = 'present' }
-    default: { $stunnel_ensure_version = 'present' }
-  }
-
+class stunnel ( $ensure_version = 'present', $startboot = '1', $default_extra )
+{
   case $::operatingsystem {
-    debian: { include stunnel::debian }
-    centos: { include stunnel::centos }
-    default: { include stunnel::default }
+    debian: { class { 'stunnel::debian': } }
+    centos: { class {  'stunnel::centos': } }
+    default: { class { 'stunnel::default': } }
   }
 
   if $use_nagios {
