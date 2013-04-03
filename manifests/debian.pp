@@ -11,16 +11,16 @@ class stunnel::debian inherits stunnel::linux {
 
   # make the /etc/default/stunnel ENABLED configurable with a variable
   # and default to on
-  case $startboot {
-    '': { $startboot = '1' }
-    default: { $startboot = '1' }
+  case $stunnel::startboot {
+    '': { $stunnel::startboot = '1' }
+    default: { $stunnel::startboot = '1' }
   }
 
   # make the /etc/default/stunnel extra configurable with a variable
   # and default to adding nothing to the default file
-  case $default_extra {
-    '': { $default_extra = '' }
-    default: { $default_extra = '' }
+  case $stunnel::default_extra {
+    '': { $stunnel::default_extra = '' }
+    default: { $stunnel::default_extra = '' }
   }
 
   file { '/etc/default/stunnel4':
