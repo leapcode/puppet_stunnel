@@ -17,7 +17,11 @@
 
 # TODO: warn on cert/key issues, fail on false accept?
 
-class stunnel ( $ensure_version = 'present', $startboot = '1', $default_extra = '', $cluster = '' )
+class stunnel (
+  $ensure_version = 'present',
+  $startboot      = '1',
+  $default_extra  = '',
+  $cluster        = '' )
 {
 
   case $::operatingsystem {
