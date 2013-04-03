@@ -24,15 +24,4 @@ class stunnel ( $ensure_version = 'present', $startboot = '1', $default_extra )
     centos: { class {  'stunnel::centos': } }
     default: { class { 'stunnel::default': } }
   }
-
-  if $use_nagios {
-    case $nagios_stunnel_procs {
-      false: { info("We aren't doing nagios checks for stunnel on ${::fqdn}" ) }
-      default: { nagios::service
-        { 'stunnel':
-          check_command => 'nagios-stat-proc!/usr/bin/stunnel4!6!5!proc';
-        }
-      }
-    }
-  }
 }
