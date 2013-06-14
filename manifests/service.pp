@@ -58,14 +58,17 @@ define stunnel::service (
   $real_client = $client ? { default => 'yes' }
   $real_pid = $pid ? { false => "/${name}.pid", default => $pid }
 
-  file { "/etc/stunnel/${name}.conf":
-    ensure  => $ensure,
-    content => template('stunnel/service.conf.erb'),
-    require => File['/etc/stunnel'],
-    notify  => Service[stunnel],
-    owner   => root,
-    group   => 0,
-    mode    => '0600';
+  $stunnel_compdir = "${::puppet_vardir}/stunnel4/configs"
+
+  file {
+    "${stunnel_compdir}/${name}.conf":
+      ensure  => $ensure,
+      content => template('stunnel/service.conf.erb'),
+      require => Package['stunnel'],
+      notify  => Exec['refresh_stunnel'],
+      owner   => root,
+      group   => 0,
+      mode    => '0600';
   }
 
   if $use_nagios {
