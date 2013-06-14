@@ -29,4 +29,38 @@ class stunnel (
     centos: { class {  'stunnel::centos': } }
     default: { class { 'stunnel::default': } }
   }
+
+  $stunnel_staging = "${::puppet_vardir}/stunnel4"
+  $stunnel_compdir = "${stunnel_staging}/configs"
+
+  file {
+    [ $stunnel_staging, "${stunnel_staging}/bin" ]:
+      ensure => directory,
+      owner  => 0,
+      group  => 0,
+      mode   => '0750';
+
+    "${stunnel_staging}/configs":
+      ensure  => directory,
+      owner   => 0,
+      group   => 0,
+      mode    => '0750',
+      recurse => true,
+      purge   => true,
+      force   => true,
+      source  => undef;
+
+    "${stunnel_staging}/bin/refresh_stunnel.sh":
+      owner   => 0,
+      group   => 0,
+      mode    => '0755',
+      content => template('stunnel/refresh_stunnel.sh.erb');
+  }
+
+  exec { 'refresh_stunnel':
+    refreshonly => true,
+    require     => File[$stunnel_compdir],
+    subscribe   => File[$stunnel_compdir],
+    command     => "${stunnel_staging}/bin/refresh_stunnel.sh"
+  }
 }
