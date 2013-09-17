@@ -55,6 +55,8 @@ define stunnel::service (
   $verify = false
 ) {
 
+  include stunnel
+
   $real_client = $client ? { default => 'yes' }
   $real_pid = $pid ? { false => "/${name}.pid", default => $pid }
 
