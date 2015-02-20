@@ -55,8 +55,8 @@ stunnel configuration variable (see manifests/server.pp) which will be used to
 create the /etc/stunnel/${name}.conf file, and then notify the stunnel service
 so it will restart.
 
-If you pass $use_nagios to this define, it will create a nagios::service entry
-for stunnel_${name} which will watch for the appropriate number processes with
-that configuration name
+If you pass $manage_nagios to this define, it will create a nagios::service
+entry for stunnel_${name} which will watch for the appropriate number processes
+with that configuration name
 
-  
+

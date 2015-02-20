@@ -51,7 +51,7 @@ define stunnel::service (
   $timeoutconnect = false,
   $timeoutidle = false,
   $transparent = false,
-  $use_nagios = false,
+  $manage_nagios = false,
   $verify = false
 ) {
 
@@ -71,7 +71,7 @@ define stunnel::service (
       mode    => '0600';
   }
 
-  if $use_nagios {
+  if $manage_nagios {
     nagios::service { "stunnel_${name}":
       check_command => "nagios-stat-proc!/usr/bin/stunnel4 /etc/stunnel/${name}.conf!6!5!proc";
     }
