@@ -72,8 +72,6 @@ define stunnel::service (
   }
 
   if $manage_nagios {
-    nagios::service { "stunnel_${name}":
-      check_command => "nagios-stat-proc!/usr/bin/stunnel4 /etc/stunnel/${name}.conf!6!5!proc";
-    }
+    stunnel::service::nagios { $name: }
   }
 }
