@@ -66,7 +66,7 @@ define stunnel::service (
       content => template('stunnel/service.conf.erb'),
       require => Package['stunnel'],
       notify  => Exec['refresh_stunnel'],
-      owner   => root,
+      owner   => 'root',
       group   => 0,
       mode    => '0600';
   }
