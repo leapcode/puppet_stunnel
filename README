@@ -55,8 +55,23 @@ stunnel configuration variable (see manifests/server.pp) which will be used to
 create the /etc/stunnel/${name}.conf file, and then notify the stunnel service
 so it will restart.
 
-If you pass $use_nagios to this define, it will create a nagios::service entry
-for stunnel_${name} which will watch for the appropriate number processes with
-that configuration name
+If you pass $manage_nagios to this define, it will create a nagios::service
+entry for stunnel_${name} which will watch for the appropriate number processes
+with that configuration name
 
-  
+Note that if you need to use some specific logic to decide whether or not to
+create a nagios service check, you should set $manage_nagios to false, and
+use stunnel::service::nagios from within your own manifests.
+
+stunnel::service::nagios
+------------------------
+
+This define creates a nagios service check for a specific tunnel. The resource
+name should be the name of the tunnel's configuration file without the '.conf'
+suffix. For example:
+
+    stunnel::service::nagios { 'carpal': }
+
+The above example would verify that the tunnel defined in
+`/etc/stunnel/carpal.conf'.
+

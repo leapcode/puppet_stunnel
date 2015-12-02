@@ -18,7 +18,7 @@ class stunnel::centos inherits stunnel::linux {
 
   Service['stunnel']{
     hasstatus => true,
-    require => [ User['stunnel'], File['/etc/init.d/stunnel'] ]
+    require   => [ User['stunnel'], File['/etc/init.d/stunnel'] ]
   }
 
   file { '/etc/stunnel/stunnel.conf':

@@ -51,7 +51,7 @@ define stunnel::service (
   $timeoutconnect = false,
   $timeoutidle = false,
   $transparent = false,
-  $use_nagios = false,
+  $manage_nagios = false,
   $verify = false
 ) {
 
@@ -68,14 +68,12 @@ define stunnel::service (
       content => template('stunnel/service.conf.erb'),
       require => Package['stunnel'],
       notify  => Exec['refresh_stunnel'],
-      owner   => root,
+      owner   => 'root',
       group   => 0,
       mode    => '0600';
   }
 
-  if $use_nagios {
-    nagios::service { "stunnel_${name}":
-      check_command => "nagios-stat-proc!/usr/bin/stunnel4 /etc/stunnel/${name}.conf!6!5!proc";
-    }
+  if $manage_nagios {
+    stunnel::service::nagios { $name: }
   }
 }
