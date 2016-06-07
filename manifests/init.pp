@@ -58,9 +58,6 @@ class stunnel (
   }
 
   exec { 'refresh_stunnel':
-    refreshonly => true,
-    require     => [ Service['stunnel'], Package['stunnel'], File[$stunnel_compdir] ],
-    subscribe   => File[$stunnel_compdir],
     command     => "${stunnel_staging}/bin/refresh_stunnel.sh"
   }
 }
