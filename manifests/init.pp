@@ -58,6 +58,7 @@ class stunnel (
   }
 
   exec { 'refresh_stunnel':
-    command     => "${stunnel_staging}/bin/refresh_stunnel.sh"
+    command => "${stunnel_staging}/bin/refresh_stunnel.sh",
+    require => [ Package['stunnel4'], File['/etc/default/stunnel4'] ]
   }
 }
