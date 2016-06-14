@@ -48,7 +48,8 @@ class stunnel (
       recurse => true,
       purge   => true,
       force   => true,
-      source  => undef;
+      source  => undef,
+      notify  => Exec['refresh_stunnel'];
 
     "${stunnel_staging}/bin/refresh_stunnel.sh":
       owner   => 0,
